@@ -102,9 +102,11 @@ if (hasBuildExtras2) {
     apply from: '../build-extras.gradle'
 }
 
+def cdvProjectTarget = privateHelpers.getProjectTarget()
+
 // Set property defaults after extension .gradle files.
 if (ext.cdvCompileSdkVersion == null) {
-    ext.cdvCompileSdkVersion = privateHelpers.getProjectTarget()
+    ext.cdvCompileSdkVersion = cdvProjectTarget
     //ext.cdvCompileSdkVersion = project.ext.defaultCompileSdkVersion
 }
 if (ext.cdvBuildToolsVersion == null) {
@@ -170,6 +172,8 @@ android {
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
+
+        targetSdkVersion cdvProjectTarget
     }
 
     lintOptions {

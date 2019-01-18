@@ -29,10 +29,7 @@ String doEnsureValueExists(filePath, props, key) {
 
 String doGetProjectTarget() {
     def props = new Properties()
-    def propertiesFile = 'project.properties';
-    if(!(file(propertiesFile).exists())) {
-      propertiesFile = '../project.properties';
-    }
+    def propertiesFile = '../project.properties';
     file(propertiesFile).withReader { reader ->
         props.load(reader)
     }

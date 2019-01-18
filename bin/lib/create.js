@@ -99,7 +99,6 @@ function copyJsAndLibrary (projectPath, shared, projectName, isLegacy) {
     } else {
         shell.mkdir('-p', nestedCordovaLibPath);
         shell.cp('-f', path.join(ROOT, 'framework', 'AndroidManifest.xml'), nestedCordovaLibPath);
-        shell.cp('-f', path.join(ROOT, 'framework', 'project.properties'), nestedCordovaLibPath);
         shell.cp('-f', path.join(ROOT, 'framework', 'build.gradle'), nestedCordovaLibPath);
         shell.cp('-f', path.join(ROOT, 'framework', 'cordova.gradle'), nestedCordovaLibPath);
         shell.cp('-r', path.join(ROOT, 'framework', 'src'), nestedCordovaLibPath);
@@ -321,7 +320,6 @@ exports.create = function (project_path, config, options, events) {
 
                 var manifest = new AndroidManifest(path.join(project_template_dir, 'AndroidManifest.xml'));
                 manifest.setPackageId(package_name)
-                    .setTargetSdkVersion(target_api.split('-')[1])
                     .getActivity().setName(safe_activity_name);
 
                 var manifest_path = path.join(app_path, 'AndroidManifest.xml');
