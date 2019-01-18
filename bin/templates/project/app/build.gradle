@@ -124,6 +124,10 @@ ext.cdvVersionCodeForceAbiDigit = cdvVersionCodeForceAbiDigit == null ? false : 
 ext.cdvMinSdkVersion = cdvMinSdkVersion == null ? defaultMinSdkVersion : Integer.parseInt('' + cdvMinSdkVersion)
 ext.cdvVersionCode = cdvVersionCode == null ? null : Integer.parseInt('' + cdvVersionCode)
 
+// Quick fix:
+def appTargetSdkVersion =
+    (cdvCompileSdkVersion == null) ? defaultTargetSdkVersion : Integer.parseInt('' + cdvCompileSdkVersion)
+
 def computeBuildTargetName(debugBuild) {
     def ret = 'assemble'
     if (cdvBuildMultipleApks && cdvBuildArch) {
@@ -170,6 +174,9 @@ android {
         if (cdvMinSdkVersion != null) {
             minSdkVersion cdvMinSdkVersion
         }
+
+        // Quick fix:
+        targetSdkVersion appTargetSdkVersion
     }
 
     lintOptions {
