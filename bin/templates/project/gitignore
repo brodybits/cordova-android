@@ -10,5 +10,6 @@ ant-gen
 # Eclipse builds
 gen
 out
-# Gradle builds
+# Gradle build artifacts
+.gradle
 /build
