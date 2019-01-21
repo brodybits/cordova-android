@@ -99,12 +99,12 @@ class ProjectBuilder {
 
         const m2 = /<uses-sdk[\s\S]*?android:minSdkVersion\s*=\s*"(.*?)"/i.exec(manifestData);
         if (!m2) {
-            throw new CordovaError('Could not android:minSdkVersion in ' + manifestPath);
+            throw new CordovaError('Could not find android:minSdkVersion in ' + manifestPath);
         }
 
         const m3 = /<uses-sdk[\s\S]*?android:targetSdkVersion\s*=\s*"(.*?)"/i.exec(manifestData);
         if (!m3) {
-            throw new CordovaError('Could not android:targetSdkVersion in ' + manifestPath);
+            throw new CordovaError('Could not find android:targetSdkVersion in ' + manifestPath);
         }
 
         return {
