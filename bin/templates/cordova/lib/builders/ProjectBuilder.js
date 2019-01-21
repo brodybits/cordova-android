@@ -103,14 +103,14 @@ class ProjectBuilder {
         }
 
         const m3 = /<uses-sdk[\s\S]*?android:targetSdkVersion\s*=\s*"(.*?)"/i.exec(manifestData);
-        if (!m2) {
+        if (!m3) {
             throw new CordovaError('Could not android:targetSdkVersion in ' + manifestPath);
         }
 
         return {
             packageName: m[1],
-            minSdkVersion: m2[1],
-            targetSdkVersion: m3[1]
+            minSdkVersion: parseInt(m2[1], 10),
+            targetSdkVersion: parseInt(m3[1], 10)
         };
     }
 
