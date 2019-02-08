@@ -196,6 +196,15 @@ function updateProjectAccordingTo (platformConfig, locations) {
         .setOrientation(platformConfig.getPreference('orientation'))
         .setLaunchMode(findAndroidLaunchModePreference(platformConfig));
 
+    events.emit('verbose', '********************************************************************************');
+    events.emit('verbose', '********************************************************************************');
+    events.emit('verbose', '********************************************************************************');
+    events.emit('verbose', '********************************************************************************');
+    events.emit('verbose', '********************************************************************************');
+    events.emit('verbose', 'android-minSdkVersion: ' + platformConfig.getPreference('android-minSdkVersion', 'android'));
+    events.emit('verbose', 'android-maxSdkVersion: ' + platformConfig.getPreference('android-maxSdkVersion', 'android'));
+    events.emit('verbose', 'android-targetSdkVersion: ' + platformConfig.getPreference('android-targetSdkVersion', 'android'));
+
     manifest.setVersionName(platformConfig.version())
         .setVersionCode(platformConfig.android_versionCode() || default_versionCode(platformConfig.version()))
         .setPackageId(androidPkgName)
