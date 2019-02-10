@@ -20,25 +20,6 @@
 import java.util.regex.Pattern
 import groovy.swing.SwingBuilder
 
-String doEnsureValueExists(filePath, props, key) {
-    if (props.get(key) == null) {
-        throw new GradleException(filePath + ': Missing key required "' + key + '"')
-    }
-    return props.get(key)
-}
-
-String doGetProjectTarget() {
-    def props = new Properties()
-    def propertiesFile = 'project.properties';
-    if(!(file(propertiesFile).exists())) {
-      propertiesFile = '../project.properties';
-    }
-    file(propertiesFile).withReader { reader ->
-        props.load(reader)
-    }
-    return doEnsureValueExists('project.properties', props, 'target')
-}
-
 String[] getAvailableBuildTools() {
     def buildToolsDir = new File(getAndroidSdkDir(), "build-tools")
     buildToolsDir.list()
@@ -188,12 +169,10 @@ def doGetConfigPreference(name, defaultValue) {
 ext {
     // These helpers are shared, but are not guaranteed to be stable / unchanged.
     privateHelpers = {}
-    privateHelpers.getProjectTarget = { doGetProjectTarget() }
     privateHelpers.findLatestInstalledBuildTools = { doFindLatestInstalledBuildTools('19.1.0') }
     privateHelpers.extractIntFromManifest = { name -> doExtractIntFromManifest(name) }
     privateHelpers.extractStringFromManifest = { name -> doExtractStringFromManifest(name) }
     privateHelpers.promptForPassword = { msg -> doPromptForPassword(msg) }
-    privateHelpers.ensureValueExists = { filePath, props, key -> doEnsureValueExists(filePath, props, key) }
 
     // These helpers can be used by plugins / projects and will not change.
     cdvHelpers = {}
