@@ -103,10 +103,6 @@ if (hasBuildExtras2) {
 }
 
 // Set property defaults after extension .gradle files.
-if (ext.cdvCompileSdkVersion == null) {
-    ext.cdvCompileSdkVersion = privateHelpers.getProjectTarget()
-    //ext.cdvCompileSdkVersion = project.ext.defaultCompileSdkVersion
-}
 if (ext.cdvBuildToolsVersion == null) {
     ext.cdvBuildToolsVersion = privateHelpers.findLatestInstalledBuildTools()
     //ext.cdvBuildToolsVersion = project.ext.defaultBuildToolsVersion
@@ -123,6 +119,13 @@ ext.cdvBuildMultipleApks = cdvBuildMultipleApks == null ? false : cdvBuildMultip
 ext.cdvVersionCodeForceAbiDigit = cdvVersionCodeForceAbiDigit == null ? false : cdvVersionCodeForceAbiDigit.toBoolean();
 ext.cdvMinSdkVersion = cdvMinSdkVersion == null ? defaultMinSdkVersion : Integer.parseInt('' + cdvMinSdkVersion)
 ext.cdvVersionCode = cdvVersionCode == null ? null : Integer.parseInt('' + cdvVersionCode)
+
+ext.cdvCompileSdkVersion = (
+    hasProperty('cdvCompileSdkVersion')
+        ? Integer.parseInt('' + findProperty('cdvCompileSdkVersion'))
+        : // project.ext.defaultCompileSdkVersion
+          privateHelpers.getProjectTarget()
+)
 
 def computeBuildTargetName(debugBuild) {
     def ret = 'assemble'
