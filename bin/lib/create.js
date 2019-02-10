@@ -38,7 +38,6 @@ exports.setShellFatal = setShellFatal;
 exports.copyJsAndLibrary = copyJsAndLibrary;
 exports.copyScripts = copyScripts;
 exports.copyBuildRules = copyBuildRules;
-exports.writeProjectProperties = writeProjectProperties;
 exports.prepBuildFiles = prepBuildFiles;
 
 function setShellFatal (value, func) {
@@ -116,13 +115,12 @@ function extractSubProjectPaths (data) {
     return Object.keys(ret);
 }
 
-function writeProjectProperties (projectPath, target_api) {
+function copyProjectProperties (projectPath) {
     var dstPath = path.join(projectPath, 'project.properties');
     var templatePath = path.join(ROOT, 'bin', 'templates', 'project', 'project.properties');
     var srcPath = fs.existsSync(dstPath) ? dstPath : templatePath;
 
     var data = fs.readFileSync(srcPath, 'utf8');
-    data = data.replace(/^target=.*/m, 'target=' + target_api);
     var subProjects = extractSubProjectPaths(data);
     subProjects = subProjects.filter(function (p) {
         return !(/^CordovaLib$/m.exec(p) ||
@@ -267,7 +265,6 @@ exports.create = function (project_path, config, options, events) {
         config.name().replace(/[^\w.]/g, '_') : 'CordovaExample';
 
     var safe_activity_name = config.android_activityName() || options.activityName || 'MainActivity';
-    var target_api = check_reqs.get_target();
 
     // Make the package conform to Java package types
     return exports.validatePackageName(package_name)
@@ -280,7 +277,6 @@ exports.create = function (project_path, config, options, events) {
             events.emit('log', '\tPackage: ' + package_name);
             events.emit('log', '\tName: ' + project_name);
             events.emit('log', '\tActivity: ' + safe_activity_name);
-            events.emit('log', '\tAndroid target: ' + target_api);
 
             events.emit('verbose', 'Copying android template project to ' + project_path);
 
@@ -321,7 +317,6 @@ exports.create = function (project_path, config, options, events) {
 
                 var manifest = new AndroidManifest(path.join(project_template_dir, 'AndroidManifest.xml'));
                 manifest.setPackageId(package_name)
-                    .setTargetSdkVersion(target_api.split('-')[1])
                     .getActivity().setName(safe_activity_name);
 
                 var manifest_path = path.join(app_path, 'AndroidManifest.xml');
@@ -331,7 +326,7 @@ exports.create = function (project_path, config, options, events) {
                 exports.copyBuildRules(project_path);
             });
             // Link it to local android install.
-            exports.writeProjectProperties(project_path, target_api);
+            exports.copyProjectProperties(project_path);
             exports.prepBuildFiles(project_path);
             events.emit('log', generateDoneMessage('create', options.link));
         }).thenResolve(project_path);
