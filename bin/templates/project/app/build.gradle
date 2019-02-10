@@ -105,7 +105,10 @@ if (hasBuildExtras2) {
 // Set property defaults after extension .gradle files.
 if (ext.cdvCompileSdkVersion == null) {
     ext.cdvCompileSdkVersion = project.ext.defaultCompileSdkVersion
+} else {
+    ext.cdvCompileSdkVersion = Integer.parseInt('' + ext.cdvCompileSdkVersion)
 }
+
 if (ext.cdvBuildToolsVersion == null) {
     ext.cdvBuildToolsVersion = privateHelpers.findLatestInstalledBuildTools()
     //ext.cdvBuildToolsVersion = project.ext.defaultBuildToolsVersion
