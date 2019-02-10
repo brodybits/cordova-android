@@ -37,10 +37,16 @@ class GradlePropertiesParser {
             'org.gradle.jvmargs': '-Xmx2048m',
 
             // allow NDK to be used - required by Gradle 1.5 plugin
-            'android.useDeprecatedNdk': 'true'
+            'android.useDeprecatedNdk': 'true',
 
             // Shaves another 100ms, but produces a "try at own risk" warning. Not worth it (yet):
-            // 'org.gradle.parallel': 'true'
+            // 'org.gradle.parallel': 'true',
+
+            // Default minimum SDK version is 19 (Android 4.4 - Kitkat)
+            'cdvMinSdkVersion': '19',
+
+            // Default SDK compile target is latest (currently 28)
+            'cdvCompileSdkVersion': '28'
         };
 
         this.gradleFilePath = path.join(platformDir, 'gradle.properties');
