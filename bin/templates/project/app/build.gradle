@@ -106,7 +106,10 @@ if (hasBuildExtras2) {
 if (ext.cdvCompileSdkVersion == null) {
     ext.cdvCompileSdkVersion = privateHelpers.getProjectTarget()
     //ext.cdvCompileSdkVersion = project.ext.defaultCompileSdkVersion
+} else {
+    ext.cdvCompileSdkVersion = Integer.parseInt('' + ext.cdvCompileSdkVersion)
 }
+
 if (ext.cdvBuildToolsVersion == null) {
     ext.cdvBuildToolsVersion = privateHelpers.findLatestInstalledBuildTools()
     //ext.cdvBuildToolsVersion = project.ext.defaultBuildToolsVersion
