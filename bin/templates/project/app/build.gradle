@@ -176,7 +176,9 @@ android {
       abortOnError false;
     }
 
-    compileSdkVersion cdvCompileSdkVersion
+    // with a quick fix for casting issue (BUG GH-657)
+    compileSdkVersion Integer.parseInt('' + cdvCompileSdkVersion)
+
     buildToolsVersion cdvBuildToolsVersion
 
     // This code exists for Crosswalk and other Native APIs.
