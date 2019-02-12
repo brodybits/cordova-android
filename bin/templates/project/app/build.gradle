@@ -177,6 +177,7 @@ android {
     }
 
     compileSdkVersion cdvCompileSdkVersion
+    targetSdkVersion cdvCompileSdkVersion
     buildToolsVersion cdvBuildToolsVersion
 
     // This code exists for Crosswalk and other Native APIs.
